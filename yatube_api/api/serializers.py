@@ -5,41 +5,45 @@ from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
-    """Сериализатор для модели Post."""
+    """Сериализатор для модели Post.
+    Во всех примерах в теории не надо. И в без него оно работает.
+    """
+
     author = SlugRelatedField(
         slug_field='username',
         read_only=True,
-        default=serializers.CurrentUserDefault()
     )
 
     class Meta:
-        fields = ('id', 'author', 'text', 'pub_date', 'image', 'group')
+        fields = '__all__'
         model = Post
 
 
 class CommentSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Comment."""
+
     author = SlugRelatedField(
         slug_field='username',
         read_only=True,
-        default=serializers.CurrentUserDefault()
     )
-    post = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
-        fields = ('id', 'author', 'text', 'created', 'post')
+        fields = '__all__'
+        read_only_fields = ('post',)
         model = Comment
 
 
 class GroupSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Group."""
+
     class Meta:
-        fields = ('id', 'title', 'slug', 'description')
+        fields = '__all__'
         model = Group
 
 
 class FollowSerializer(serializers.ModelSerializer):
     """Сериализатор для модели Follow."""
+
     user = SlugRelatedField(
         slug_field='username',
         read_only=True,
@@ -51,7 +55,7 @@ class FollowSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = ('user', 'following')
+        fields = '__all__'
         model = Follow
         validators = [
             serializers.UniqueTogetherValidator(
