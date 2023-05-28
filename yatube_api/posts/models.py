@@ -21,7 +21,7 @@ class Post(models.Model):
     text = models.TextField(verbose_name='Текст')
     pub_date = models.DateTimeField(auto_now_add=True,
                                     verbose_name='Дата публикации'
-    )
+                                    )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE,
         related_name='posts',
@@ -60,9 +60,9 @@ class Comment(models.Model):
     )
     text = models.TextField(verbose_name='Текст')
     created = models.DateTimeField(auto_now_add=True,
-        db_index=True,
-        verbose_name='Дата добавления'
-    )
+                                   db_index=True,
+                                   verbose_name='Дата добавления'
+                                   )
 
     def __str__(self):
         return self.text
