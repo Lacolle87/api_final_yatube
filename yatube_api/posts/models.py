@@ -9,12 +9,12 @@ class Group(models.Model):
     slug = models.SlugField(unique=True, verbose_name='Слаг')
     description = models.TextField(verbose_name='Описание')
 
-    def __str__(self):
-        return self.title
-
     class Meta:
         verbose_name = 'Группа'
         verbose_name_plural = 'Группы'
+
+    def __str__(self):
+        return self.title
 
 
 class Post(models.Model):
@@ -39,12 +39,12 @@ class Post(models.Model):
         verbose_name='Группа'
     )
 
-    def __str__(self):
-        return self.text
-
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
+
+    def __str__(self):
+        return self.text
 
 
 class Comment(models.Model):
@@ -64,12 +64,12 @@ class Comment(models.Model):
                                    verbose_name='Дата добавления'
                                    )
 
-    def __str__(self):
-        return self.text
-
     class Meta:
         verbose_name = 'Комментарий'
         verbose_name_plural = 'Комментарии'
+
+    def __str__(self):
+        return self.text
 
 
 class Follow(models.Model):
@@ -86,9 +86,6 @@ class Follow(models.Model):
         verbose_name='Автор'
     )
 
-    def __str__(self):
-        return f'{self.user.username} подписан на {self.following.username}'
-
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
@@ -98,3 +95,6 @@ class Follow(models.Model):
                 name='unique_user_following'
             )
         ]
+
+    def __str__(self):
+        return f'{self.user.username} подписан на {self.following.username}'

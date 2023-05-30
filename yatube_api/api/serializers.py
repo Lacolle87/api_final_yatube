@@ -5,9 +5,7 @@ from posts.models import Comment, Follow, Group, Post, User
 
 
 class PostSerializer(serializers.ModelSerializer):
-    """Сериализатор для модели Post.
-    Во всех примерах в теории не надо. И в без него оно работает.
-    """
+    """Сериализатор для модели Post."""
 
     author = SlugRelatedField(
         slug_field='username',
@@ -49,13 +47,14 @@ class FollowSerializer(serializers.ModelSerializer):
         read_only=True,
         default=serializers.CurrentUserDefault()
     )
+    # сдесь без default не работает
     following = SlugRelatedField(
         slug_field='username',
         queryset=User.objects.all(),
     )
 
     class Meta:
-        fields = '__all__'
+        fields = ('user', 'following')
         model = Follow
         validators = [
             serializers.UniqueTogetherValidator(
@@ -69,6 +68,5 @@ class FollowSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         if user == following:
             raise serializers.ValidationError(
-                'Попытка подписаться на самого себя!'
-            )
+                'Попытка подписаться на самого себя!')
         return data
