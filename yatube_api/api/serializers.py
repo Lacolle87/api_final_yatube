@@ -47,7 +47,6 @@ class FollowSerializer(serializers.ModelSerializer):
         read_only=True,
         default=serializers.CurrentUserDefault()
     )
-    # сдесь без default не работает
     following = SlugRelatedField(
         slug_field='username',
         queryset=User.objects.all(),
